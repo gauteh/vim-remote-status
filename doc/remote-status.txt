@@ -1,29 +1,31 @@
-*git-remote.txt*
+*remote-status.txt*
 
-INTRODUCTION                            *git-remote*
+INTRODUCTION                            *remote-status*
 
 A small status flag designed for vim-flagship which shows whether the local
 git branch is up-to-date with the remote branch it is tracking. Requires
 *fugitive*.
 
-USAGE                                   *git-remote:usage*
+USAGE                                   *remote-status:usage*
 
 Hoist the GitRemoteStatus flag using >
 
   autocmd User Flags call Hoist("buffer", 1, "GitRemoteStatus")
+<
 
 
-OPTIONS                                 *git-remote:options*
+OPTIONS                                 *remote-status:options*
 
 Specify whether the remote should be updated: >
 
   let g:remote_status_auto_update = 0 (default 0)
+<
 
 
 Specify the interval in seconds before update: >
 
   let g:remote_status_update_interval = 60
-
+<
 
 Status symbols: >
 
@@ -31,5 +33,6 @@ Status symbols: >
   let g:remote_status_pull     = '↓'
   let g:remote_status_push     = '↑'
   let g:remote_status_diverged = '↕'
+<
 
-
+vim:ft=help:norl:
