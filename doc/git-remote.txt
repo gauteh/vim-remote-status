@@ -10,7 +10,7 @@ USAGE                                   *git-remote:usage*
 
 Hoist the GitRemoteStatus flag using >
 
-  autocmd! User Flags call Hoist("buffer", 1, "GitRemoteStatus")
+  autocmd User Flags call Hoist("buffer", 1, "GitRemoteStatus")
 
 
 OPTIONS                                 *git-remote:options*
