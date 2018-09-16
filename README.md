@@ -16,3 +16,6 @@ If you want to try automatically fetching the remote try:
 
 <img src="remote-status.png"></img>
 
+For more help see `:help [remote-status](doc/remote-status.txt)`.
+
+
