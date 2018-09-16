@@ -4,7 +4,7 @@
 "
 " based on: https://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git
 
-function s:UpdateStatus()
+function! s:UpdateStatus()
   if !exists("b:git_dir")
     " set by Fugitive, not in GIT repo
     let b:git_status = ''
