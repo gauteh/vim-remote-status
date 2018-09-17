@@ -16,8 +16,12 @@ Hoist the GitRemoteStatus flag using >
 You can use the GitRemoteStatus() function in your own statusline: >
 
   :echo call GitRemoteStatus()
-
 <
+
+
+The icons are UTF symbols, which will be used if g:webdevicons_enabled is 1 or
+g:remote_status_nerd_font is set to 1. See vim-devicons or nerdfonts for more
+information. See below in |remote-status:options| on how to set them manually.
 
 OPTIONS                                 *remote-status:options*
 

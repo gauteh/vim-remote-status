@@ -25,6 +25,19 @@ function! s:UpdateStatus()
   let local_branch    = '@'
   let upstream_branch = '@{u}'
 
+  if get (g:, 'webdevicons_enable', 0) || get (g:, 'remote_status_nerd_font', 0)
+    let s_uptodate =  get (g:, 'remote_status_uptodate', '👌')
+    let s_pull =      get (g:, 'remote_status_pull', '↓')
+    let s_push =      get (g:, 'remote_status_push', '↑')
+    let s_diverged =  get (g:, 'remote_status_diverged', '↕')
+  else
+    let s_uptodate =  get (g:, 'remote_status_uptodate', 'OK')
+    let s_pull =      get (g:, 'remote_status_pull', 'PL')
+    let s_push =      get (g:, 'remote_status_push', 'PS')
+    let s_diverged =  get (g:, 'remote_status_diverged', 'DV')
+  endif
+
+
   try
     let local  = fugitive#RevParse (local_branch)
     let remote = fugitive#RevParse (upstream_branch)
@@ -32,13 +45,13 @@ function! s:UpdateStatus()
 
 
     if local == remote
-      let status = get (g:, 'remote_status_uptodate', '👌')
+      let status = s_uptodate
     elseif local == base
-      let status = get (g:, 'remote_status_pull', '↓')
+      let status = s_pull
     elseif remote == base
-      let status = get (g:, 'remote_status_push', '↑')
+      let status = s_push
     else
-      let status = get (g:, 'remote_status_diverged', '↕')
+      let status = s_diverged
     endif
 
   catch /^fugitive:/
