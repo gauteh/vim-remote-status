@@ -8,6 +8,13 @@ If using vim-flagship:
   autocmd User Flags call Hoist("buffer", 1, "GitRemoteStatus")
 ```
 
+
+You can use the GitRemoteStatus() function in your own statusline: >
+
+```
+  :echo call GitRemoteStatus()
+```
+
 If you want to try automatically fetching the remote try:
 
 ```

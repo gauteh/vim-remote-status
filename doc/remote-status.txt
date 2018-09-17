@@ -13,6 +13,11 @@ Hoist the GitRemoteStatus flag using >
   autocmd User Flags call Hoist("buffer", 1, "GitRemoteStatus")
 <
 
+You can use the GitRemoteStatus() function in your own statusline: >
+
+  :echo call GitRemoteStatus()
+
+<
 
 OPTIONS                                 *remote-status:options*
 
