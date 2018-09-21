@@ -1,7 +1,5 @@
 " Gets the remote / local status for a given branch.
 "
-" This assumes that git remote update or git fetch has been run.
-"
 " based on: https://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git
 
 function! remotestatus#UpdateStatusHandler(channel)
