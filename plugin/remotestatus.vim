@@ -5,7 +5,6 @@
 " based on: https://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git
 
 function! remotestatus#UpdateStatusHandler(channel)
-  echom "remote update done!"
   call remotestatus#UpdateStatus (v:true)
   return
 endfunction
@@ -24,7 +23,6 @@ function! remotestatus#UpdateStatus(in_cb)
   if !a:in_cb
     if g:remote_status_auto_update
       if (localtime () - b:lastupdate) >= g:remote_status_update_interval
-        echom "running remote update.."
         let b:job = job_start ('git remote update', { "close_cb" : "remotestatus#UpdateStatusHandler"})
         let b:lastupdate = localtime()
       endif
