@@ -4,6 +4,7 @@
 
 function! remotestatus#UpdateStatusHandler(channel)
   call remotestatus#UpdateStatus (v:true)
+  redrawstatus
   return
 endfunction
 
@@ -21,8 +22,12 @@ function! remotestatus#UpdateStatus(in_cb)
   if !a:in_cb
     if g:remote_status_auto_update
       if (localtime () - b:lastupdate) >= g:remote_status_update_interval
-        let b:job = job_start ('git remote update', { "close_cb" : "remotestatus#UpdateStatusHandler"})
-        let b:lastupdate = localtime()
+        if exists("b:remote_status_job") && job_status(b:remote_status_job) == "run"
+          " job already running
+          let b:lastupdate = localtime()
+        else
+          let b:remote_status_job = job_start ('git remote update', { "cwd" : b:git_dir, "close_cb" : "remotestatus#UpdateStatusHandler"})
+        endif
       endif
     endif
   else
@@ -37,13 +42,19 @@ function! remotestatus#UpdateStatus(in_cb)
     let s_pull =      get (g:, 'remote_status_pull', '↓')
     let s_push =      get (g:, 'remote_status_push', '↑')
     let s_diverged =  get (g:, 'remote_status_diverged', '↕')
+    let s_updating =  get (g:, 'remote_status_upating', '%')
   else
     let s_uptodate =  get (g:, 'remote_status_uptodate', 'OK')
     let s_pull =      get (g:, 'remote_status_pull', 'PL')
     let s_push =      get (g:, 'remote_status_push', 'PS')
     let s_diverged =  get (g:, 'remote_status_diverged', 'DV')
+    let s_updating =  get (g:, 'remote_status_upating', '%')
   endif
 
+  if exists("b:remote_status_job") && job_status(b:remote_status_job) == "run"
+    let b:git_status = s_updating
+    return b:git_status
+  endif
 
   try
     let local  = fugitive#RevParse (local_branch)
