@@ -42,6 +42,7 @@ Status symbols: >
   let g:remote_status_pull     = '↓'
   let g:remote_status_push     = '↑'
   let g:remote_status_diverged = '↕'
+  let g:remote_status_updating = '%'
 <
 
 vim:ft=help:norl:

@@ -87,9 +87,9 @@ function! GitRemoteStatus()
 
     au BufWritePost <buffer> call remotestatus#UpdateStatus(v:false)
     au BufReadPost  <buffer> call remotestatus#UpdateStatus(v:false)
-    au BufWinEnter  <buffer> call remotestatus#UpdateStatus(v:false)
-    au BufEnter     <buffer> call remotestatus#UpdateStatus(v:false)
-    au FocusGained  <buffer> call remotestatus#UpdateStatus(v:false)
+    " au BufWinEnter  <buffer> call remotestatus#UpdateStatus(v:false)
+    " au BufEnter     <buffer> call remotestatus#UpdateStatus(v:false)
+    " au FocusGained  <buffer> call remotestatus#UpdateStatus(v:false)
 
     au BufReadPost  index    call remotestatus#UpdateStatus(v:false)
 
