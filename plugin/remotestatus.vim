@@ -4,7 +4,13 @@
 "
 " based on: https://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git
 
-function! s:UpdateStatus()
+function! remotestatus#UpdateStatusHandler(channel)
+  echom "remote update done!"
+  call remotestatus#UpdateStatus (v:true)
+  return
+endfunction
+
+function! remotestatus#UpdateStatus(in_cb)
   if !exists("b:git_dir")
     " set by Fugitive, not in GIT repo
     let b:git_status = ''
@@ -15,11 +21,16 @@ function! s:UpdateStatus()
   let g:remote_status_update_interval = get (g:, 'remote_status_update_interval', 60)
 
   let b:lastupdate = get (b:, 'lastupdate', 0)
-  if g:remote_status_auto_update
-    if (localtime () - b:lastupdate) >= g:remote_status_update_interval
-      let b:job = job_start ('git remote update')
-      let b:lastupdate = localtime()
+  if !a:in_cb
+    if g:remote_status_auto_update
+      if (localtime () - b:lastupdate) >= g:remote_status_update_interval
+        echom "running remote update.."
+        let b:job = job_start ('git remote update', { "close_cb" : "remotestatus#UpdateStatusHandler"})
+        let b:lastupdate = localtime()
+      endif
     endif
+  else
+    let b:lastupdate = localtime()
   endif
 
   let local_branch    = '@'
@@ -65,13 +76,13 @@ endfunction
 
 function! GitRemoteStatus()
   if !exists('b:git_status')
-    let status = s:UpdateStatus ()
+    let status = remotestatus#UpdateStatus (v:false)
 
-    au BufWritePost <buffer> call s:UpdateStatus()
-    au BufReadPost  <buffer> call s:UpdateStatus()
-    au BufWinEnter  <buffer> call s:UpdateStatus()
-    au BufEnter     <buffer> call s:UpdateStatus()
-    au FocusGained  <buffer> call s:UpdateStatus()
+    au BufWritePost <buffer> call remotestatus#UpdateStatus(v:false)
+    au BufReadPost  <buffer> call remotestatus#UpdateStatus(v:false)
+    au BufWinEnter  <buffer> call remotestatus#UpdateStatus(v:false)
+    au BufEnter     <buffer> call remotestatus#UpdateStatus(v:false)
+    au FocusGained  <buffer> call remotestatus#UpdateStatus(v:false)
 
   else
     let status = b:git_status
