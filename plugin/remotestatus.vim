@@ -84,6 +84,8 @@ function! GitRemoteStatus()
     au BufEnter     <buffer> call remotestatus#UpdateStatus(v:false)
     au FocusGained  <buffer> call remotestatus#UpdateStatus(v:false)
 
+    au BufReadPost  index    call remotestatus#UpdateStatus(v:false)
+
   else
     let status = b:git_status
   endif
